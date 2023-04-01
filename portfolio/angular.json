@@ -28,7 +28,6 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
-            "proxyConfig": "proxy.conf.json",
             "scripts": []
           },
           "configurations": {
