@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import * as THREE from 'three';
 
 @Component({
@@ -6,7 +6,7 @@ import * as THREE from 'three';
   templateUrl: './three-jscomponent.component.html',
   styleUrls: ['./three-jscomponent.component.css']
 })
-export class ThreeJSComponentComponent implements OnInit {
+export class ThreeJSComponentComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('container', {static: true})
   container!: ElementRef<HTMLDivElement>;
@@ -14,14 +14,34 @@ export class ThreeJSComponentComponent implements OnInit {
   scene!: THREE.Scene;
   camera!: THREE.PerspectiveCamera;
   renderer!: THREE.WebGLRenderer;
+  animationFrameId!: number;
 
   ngOnInit() {
     this.initScene();
     this.initCamera();
+  }
+
+  ngAfterViewInit() {
     this.initRenderer();
     this.render();
   }
 
+
+  ngOnDestroy() {
+    if (this.animationFrameId != null) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+    window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(){
+    const container = this.container.nativeElement;
+    const aspect = container.offsetWidth / container.offsetHeight;
+    this.camera.aspect = aspect;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(container.offsetWidth, container.offsetHeight);
+  }
   private initScene() {
     this.scene = new THREE.Scene();
     const geometry = new THREE.BoxGeometry();
@@ -37,12 +57,14 @@ export class ThreeJSComponentComponent implements OnInit {
 
   private initRenderer() {
     this.renderer = new THREE.WebGLRenderer();
-    this.renderer.setSize(this.container.nativeElement.offsetWidth, this.container.nativeElement.offsetHeight);
-    this.container.nativeElement.appendChild(this.renderer.domElement);
+    const container = this.container.nativeElement;
+    console.log(container.offsetWidth, container.offsetHeight);
+    this.renderer.setSize(container.offsetWidth, container.offsetHeight);
+    container.appendChild(this.renderer.domElement);
   }
 
   private render() {
-    requestAnimationFrame(() => this.render());
+    this.animationFrameId = requestAnimationFrame(() => this.render());
     this.renderer.render(this.scene, this.camera);
   }
 
