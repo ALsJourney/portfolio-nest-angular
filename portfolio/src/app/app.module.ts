@@ -7,19 +7,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import {MatCardModule} from "@angular/material/card";
 import { ThreeJSComponentComponent } from './components/three-jscomponent/three-jscomponent.component';
+import { HeaderComponentComponent } from './components/header-component/header-component.component';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
     AppComponent,
     PortfolioComponent,
-    ThreeJSComponentComponent
+    ThreeJSComponentComponent,
+    HeaderComponentComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatCardModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatProgressSpinnerModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
