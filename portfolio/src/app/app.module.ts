@@ -9,13 +9,15 @@ import {MatCardModule} from "@angular/material/card";
 import { ThreeJSComponentComponent } from './components/three-jscomponent/three-jscomponent.component';
 import { HeaderComponentComponent } from './components/header-component/header-component.component';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { IntroTextComponent } from './components/intro-text/intro-text.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PortfolioComponent,
     ThreeJSComponentComponent,
-    HeaderComponentComponent
+    HeaderComponentComponent,
+    IntroTextComponent
   ],
   imports: [
     BrowserModule,

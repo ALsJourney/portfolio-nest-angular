@@ -1,0 +1,14 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+}
+
+.intro-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

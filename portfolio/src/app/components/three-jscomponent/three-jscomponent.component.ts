@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, V
 import * as THREE from 'three';
 import {FontLoader} from "three/examples/jsm/loaders/FontLoader";
 import {TextGeometry} from "three/examples/jsm/geometries/TextGeometry";
-import {AmbientLight, Mesh, MeshPhongMaterial} from "three";
+import {AmbientLight, Mesh, MeshPhongMaterial, MeshStandardMaterial} from "three";
 @Component({
   selector: 'app-threejs',
   templateUrl: './three-jscomponent.component.html',
@@ -90,8 +90,9 @@ export class ThreeJSComponentComponent implements OnInit, AfterViewInit, OnDestr
     const offsetY = 0.5 * (boundingBox!.max.y - boundingBox!.min.y);
     geometry.translate(-offsetX, -offsetY, 0);
 
-    const material = new MeshPhongMaterial({
-      color: 0xff23f2
+    const randomColor = new THREE.Color(Math.random() * 0xffffff);
+    const material = new MeshStandardMaterial({
+      color: randomColor
     });
     const textMesh = new Mesh(geometry, material);
     this.scene.add(textMesh);
@@ -117,7 +118,8 @@ export class ThreeJSComponentComponent implements OnInit, AfterViewInit, OnDestr
 
         // Change the color
         const randomColor = new THREE.Color(Math.random() * 0xfff);
-        (intersect.object.material as MeshPhongMaterial).color.set(randomColor);
+        (intersect.object.material as MeshStandardMaterial).color.set(randomColor);
+        (intersect.object.material as MeshStandardMaterial).emissive.set(randomColor.multiplyScalar(0.5));
       }
     }
 
